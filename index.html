@@ -5,14 +5,11 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable = no">
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> -->
-<title>3RGB Color Similarity</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<title>2RGB Color Similarity</title>
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-/*@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');*/
 
 body {
   font-family: 'Poppins', Arial, sans-serif;
@@ -523,8 +520,9 @@ input:hover {
 </div>
 <div id="overlay" class="overlay"></div>
 
+<script>
 
-    <script>
+
 function rgbToLab(r, g, b) {
 function rgbToXyz(r, g, b) {
     r = r / 255;
@@ -651,6 +649,8 @@ const similarity = rgbSimilarity(rgb1, rgb2);
 
 return similarity;
 }
+
+
 
 function findClosestColorIndex(targetColor, colorArray) {
     // Initialize variables to keep track of the minimum similarity and index
@@ -878,20 +878,33 @@ function randomizePreview() {
     const maxNumber = 4; // Change this number to any maximum value you want
     const randomList = generateRandomList(Math.ceil(innerWidth/20)+1, maxNumber);
     result2DArray = create2DArray(randomList, maxNumber);
-
     applyBoxShadows(result2DArray);
 }
 
 // Function to generate and apply the box-shadow CSS
 function applyBoxShadows(result2DArray) {
-    result2DArray.forEach((row, index) => {
-        const boxShadowValues = row.map(number => `${(number + 1) * 20}px 0`).join(', ');
-        const cssRule = `.rowNumber${index} { box-shadow: ${boxShadowValues}; }`;
-        
-        // Apply the box-shadow dynamically
-        document.styleSheets[0].insertRule(cssRule, document.styleSheets[0].cssRules.length);
-    });
+    // Find the internal stylesheet
+    let styleSheet = null;
+    for (let i = 0; i < document.styleSheets.length; i++) {
+        const sheet = document.styleSheets[i];
+        if (sheet.href === null || sheet.href.startsWith(window.location.origin)) {
+            styleSheet = sheet;
+            break;
+        }
+    }
+
+    if (styleSheet) {
+        result2DArray.forEach((row, index) => {
+            const boxShadowValues = row.map(number => `${(number + 1) * 20}px 0`).join(', ');
+            const cssRule = `.rowNumber${index} { box-shadow: ${boxShadowValues}; }`;
+
+            styleSheet.insertRule(cssRule, styleSheet.cssRules.length);
+        });
+    } else {
+        console.error('No suitable stylesheet found to insert rules.');
+    }
 }
+
 
 function newPreviewGradient() {
     const blocksPreviewContainer = document.getElementById('blocksPreviewContainer');
@@ -1133,8 +1146,6 @@ document.querySelectorAll('.dropdownBtn').forEach(button => {
 });
 
 document.getElementById('overlay').addEventListener('click', closeModal);
-
-
 
 </script>
 
