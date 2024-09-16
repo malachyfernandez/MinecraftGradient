@@ -412,6 +412,7 @@ input:hover {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: pixelated;
     cursor: pointer;
+    outline-offset: 1px;
 }
 
 @keyframes fadeIn {
@@ -422,6 +423,10 @@ input:hover {
 #gridContainer{
     display:flex;
     flex-wrap: wrap;
+}
+
+.gridBlock:hover {
+  outline: rgba(255, 255, 255, 0.3) solid 2.5px;
 }
 </style>
 </head>
