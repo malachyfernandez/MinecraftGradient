@@ -510,7 +510,6 @@ const colorArray =
 
 let activeBlockButton = null; // To track which button was clicked
 createGrid();
-
 function adjustModalWidth() {
     const modal = document.getElementById('modal');
     const gridContainer = document.getElementById('gridContainer');
@@ -524,8 +523,8 @@ function adjustModalWidth() {
     // Calculate the number of columns that fit within the available width
     const numColumns = Math.floor(availableWidth / (blockWidth + blockMargin));
 
-    // Calculate the new width for the modal
-    const newModalWidth = numColumns * (blockWidth + blockMargin);
+    // Calculate the new width for the modal, rounding up to ensure it always fits the blocks
+    const newModalWidth = numColumns * (blockWidth + blockMargin) + blockMargin; // Add extra margin for Chrome rounding issues
 
     // Set the modal's width dynamically
     gridContainer.style.width = `${newModalWidth}px`;
