@@ -422,7 +422,6 @@ input:hover {
 #gridContainer{
     display:flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 </style>
 </head>
@@ -1033,11 +1032,11 @@ function adjustModalWidth() {
     // Calculate the number of columns that fit within the available width
     const numColumns = Math.floor(availableWidth / (blockWidth + blockMargin));
 
-    // Calculate the new width for the modal
-    const newModalWidth = numColumns * (blockWidth + blockMargin);
+    // Calculate the new width for the modal, rounding up to ensure it always fits the blocks
+    const newModalWidth = numColumns * (blockWidth + blockMargin); // Add extra margin for Chrome rounding issues
 
     // Set the modal's width dynamically
-    modal.style.width = `${newModalWidth}px`;
+    gridContainer.style.width = `${newModalWidth}px`;
 }
 
 // Add event listener to adjust the modal width when the window is resized
