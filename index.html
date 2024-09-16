@@ -1040,8 +1040,8 @@ function adjustModalWidth() {
     const margin = 30; // Padding for the modal in pixels
 
     // Calculate the available width for the modal
-    const availableWidth = window.innerWidth - 2 * margin; // Subtracting modal padding
-
+    const availableWidth = Math.min(window.innerWidth - 2 * margin, 18 * (blockMargin + blockWidth)); // Subtracting modal padding
+    
     // Calculate the number of columns that fit within the available width
     const numColumns = Math.floor(availableWidth / (blockWidth + blockMargin));
 
