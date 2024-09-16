@@ -525,7 +525,7 @@ function adjustModalWidth() {
     const numColumns = Math.floor(availableWidth / (blockWidth + blockMargin));
 
     // Calculate the new width for the modal
-    const newModalWidth = numColumns * (blockWidth + blockMargin);
+    const newModalWidth = numColumns * (blockWidth + blockMargin) + 1;
 
     // Set the modal's width dynamically
     modal.style.width = `${newModalWidth}px`;
