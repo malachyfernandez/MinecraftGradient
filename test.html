@@ -525,10 +525,10 @@ function adjustModalWidth() {
     const numColumns = Math.floor(availableWidth / (blockWidth + blockMargin));
 
     // Calculate the new width for the modal
-    const newModalWidth = numColumns * (blockWidth + blockMargin) + 1;
+    const newModalWidth = numColumns * (blockWidth + blockMargin);
 
     // Set the modal's width dynamically
-    modal.style.width = `${newModalWidth}px`;
+    gridContainer.style.width = `${newModalWidth}px`;
 }
 
 // Add event listener to adjust the modal width when the window is resized
