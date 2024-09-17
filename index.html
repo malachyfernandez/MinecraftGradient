@@ -335,6 +335,8 @@ input:hover {
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 10;
     display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
 }
 
 .blockSelectionModal {
@@ -442,6 +444,9 @@ input:hover {
 .gridBlock:hover {
   outline: rgba(255, 255, 255, 0.3) solid 2.5px;
 }
+#loadingOverlay {
+  z-index: 50;
+}
 </style>
 </head>
 
@@ -519,6 +524,7 @@ input:hover {
     <div id="gridContainer"></div>
 </div>
 <div id="overlay" class="overlay"></div>
+<div id="loadingOverlay" class="overlay">loading...</div>
 
 <script>
 
@@ -916,10 +922,18 @@ function newPreviewGradient() {
 
 function newGradient() {
     const blocksContainer = document.getElementById('blocksContainer');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
     blocksContainer.innerHTML = '';
     blocksContainer.style.visibility = 'visible';
-    createDummyBlocks();
-    refreshGradient();
+    loadingOverlay.style.display = 'flex';
+
+    // Allow the browser to render the loading overlay before heavy computations
+    setTimeout(() => {
+        createDummyBlocks();
+        refreshGradient();
+        loadingOverlay.style.display = 'none';
+    }, 50); // Delay of 50 milliseconds
 }
 
 newPreviewGradient();
