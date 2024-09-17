@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<title>3RGB Color Similarity</title>
+<title>2RGB Color Similarity</title>
 <style>
 
 body {
@@ -497,8 +497,8 @@ input:hover {
         <div class="sliderContainer">
             <label for="LengthSlider">GRADIENT LENGTH</label>
             <div class="slider">
-                <input inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" id="LengthInput" class="sliderInput" min="2" max="50" value="40">
-                <input type="range" id="LengthSlider" min="2" max="50" value="40" step="1" onchange="newGradient()">
+                <input inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" id="LengthInput" class="sliderInput" min="2" max="50" value="14">
+                <input type="range" id="LengthSlider" min="2" max="50" value="14" step="1" onchange="newGradient()">
             </div>
         </div>
         <div class="sliderContainer">
@@ -806,7 +806,7 @@ function createDummyPreviewLine(rowNumber) {
 // Example usage:
 var rgb1 = [226,178,172]; // Red color
 var rgb2 = [133,97,191]; // Blue color
-var length = 40; // Number of gradient steps
+var length = 14; // Number of gradient steps
 var randomness = 0.5; // Randomness factor (0 to 1)
 
 function createDummyBlocks() {
@@ -936,8 +936,11 @@ function newGradient() {
     }, 50); // Delay of 50 milliseconds
 }
 
-newPreviewGradient();
 newGradient();
+setTimeout(() => {
+    newPreviewGradient();
+}, 50); // Delay of 50 milliseconds
+// newPreviewGradient();
 
 let previousWidth = window.innerWidth;
 let resizeTimeout;
@@ -1136,7 +1139,7 @@ function selectBlock(block) {
 
     closeModal();
     newPreviewGradient(); // Replace with your function call
-    setTimeout(newGradient, 1000);
+    setTimeout(newGradient, 50);
 }
 
 function filterBlocks() {
