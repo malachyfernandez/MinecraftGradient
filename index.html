@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<title>3RGB Color Similarity</title>
+<title>2RGB Color Similarity</title>
 <style>
 
 body {
@@ -141,6 +141,7 @@ button:hover {
     flex-direction: column;
     gap:10px;
     pointer-events: auto;
+    transition: gap 0.3s ease;
 }
 .settingsPanel {
     position: fixed;
@@ -516,13 +517,126 @@ input:hover {
 #modalBlockName {
     width:calc(100% - 30px);
     overflow:hidden;
+    text-transform: capitalize;
+    font-weight: bold;
 }
+#hiddenBlocksContainer {
+  position: fixed;
+  top: 20px; /* Adjust as needed to not overlap with blockNameDisplay */
+  right: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  z-index: 10;
+  width:calc(100% - 40px);
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.hiddenBlockItem {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  pointer-events: auto;
+}
+
+.hiddenBlockItem img {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  border-radius: 5px;
+  outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+  outline-offset: 1px;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(200, 130, 210, 0.4);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  color: black;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0;
+}
+
+.deleteBtn:hover {
+    background-color: rgb(130, 80, 140);
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.error-message {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    opacity: 0;
+    transition: top 0.5s ease, opacity 0.5s ease;
+    z-index: 1000;
+    max-width: 90%;
+}
+
+.error-message.show {
+    top: 10px;
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+/* When collapsed */
+.collapsed #slidersContainer {
+  max-height: 0;
+  overflow: hidden;
+}
+
+/* When expanded */
+#slidersContainer {
+  max-height: 500px; /* Set to a value that can contain the content */
+  transition: max-height 0.3s ease;
+}
+#toggleButton {
+    position:fixed;
+    top:2px;
+    right:15px;
+    padding:0;
+    font-size:10px;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    height:20px;
+    width:50px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+}
+
 </style>
 </head>
 
 <body>
+  <div id="error-message" class="error-message hidden"></div>
+
   <div id="blockNameDisplay"></div>
-  
+  <div id="hiddenBlocksContainer"></div>
+
   <div class="blockAlignerContainer">
     <div class="blockScalerContainer">
       <div id="blocksPreviewContainer"></div>
@@ -537,6 +651,7 @@ input:hover {
   </div>
   <div class="gradientControllerRightAligner">
     <div class="gradientController">
+        <button id="toggleButton" onclick="toggleGradientController()">LESS</button>
         <div class="blockSelectRow">
             <div class="BtnAndLabelContainer">
                 <label>BLOCK 1</label>
@@ -568,20 +683,22 @@ input:hover {
 
             
         </div>
-        <div class="sliderContainer">
-            <label for="LengthSlider">GRADIENT LENGTH</label>
-            <div class="slider">
-                <input inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" id="LengthInput" class="sliderInput" min="2" max="50" value="14">
-                <input type="range" id="LengthSlider" min="2" max="50" value="14" step="1" onchange="newGradient()">
+        <div id="slidersContainer">
+            <div class="sliderContainer">
+                <label for="LengthSlider">GRADIENT LENGTH</label>
+                <div class="slider">
+                    <input inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" id="LengthInput" class="sliderInput" min="2" max="50" value="14">
+                    <input type="range" id="LengthSlider" min="2" max="50" value="14" step="1" onchange="newGradient()">
+                </div>
             </div>
+            <div class="sliderContainer">
+                <label for="randomnessSlider">RANDOMNESS</label>
+                <div class="slider">
+                    <input inputmode="numeric" id="randomnessInput" class="sliderInput" min="0" max="100" value="30%"> <!-- Displayed as percent -->
+                    <input type="range" id="randomnessSlider" min="0" max="1" value="0.30" step="0.01" onchange="newGradient()">
+                </div>
+            </div>    
         </div>
-        <div class="sliderContainer">
-            <label for="randomnessSlider">RANDOMNESS</label>
-            <div class="slider">
-                <input inputmode="numeric" id="randomnessInput" class="sliderInput" min="0" max="100" value="50%"> <!-- Displayed as percent -->
-                <input type="range" id="randomnessSlider" min="0" max="1" value="0.50" step="0.01" onchange="newGradient()">
-            </div>
-        </div>    
     </div>
   </div>
 </div>
@@ -920,7 +1037,7 @@ function createDummyPreviewLine(rowNumber) {
 var rgb1 = [15,10,24];
 var rgb2 = [130,123,119];
 var length = 14; // Number of gradient steps
-var randomness = 0.5; // Randomness factor (0 to 1)
+var randomness = 0.3; // Randomness factor (0 to 1)
 
 function createDummyBlocks() {
     for (let i = 0; i < Math.ceil(innerWidth/20) + 1; i++) {
@@ -1253,6 +1370,21 @@ function selectBlock(block) {
     }
 
     closeModal();
+        // Assuming you have these arrays and variables
+    // Find the index of the block in colorArray
+    let blockIndex = colorArray.indexOf(block);
+
+    if (blockIndex !== -1) {
+        // Check if the value in hiddenBlocks matches the index from colorArray
+        if (hiddenBlocks.indexOf(blockIndex) !== -1) {
+            // Remove the item at that index from hiddenBlocks
+            hiddenBlocks.splice(hiddenBlocks.indexOf(blockIndex), 1);
+            triggerError("Unhid Block");
+        }
+    }
+    
+    updateHiddenBlocksDisplay();
+
     newPreviewGradient(); // Replace with your function call
     setTimeout(newGradient, 50);
 }
@@ -1297,9 +1429,121 @@ function closeBlockModal() {
 // Modify the close button SVG icon in HTML accordingly.
 
 function hideBlock() {
-    hiddenBlocks.push(colorArray.indexOf(currentBlockData));
-    closeBlockModal();
-    newGradient(); 
+    if (currentBlockData[2].toString() != rgb1.toString() && currentBlockData[2].toString() != rgb2.toString()) {
+        hiddenBlocks.push(colorArray.indexOf(currentBlockData));
+        closeBlockModal();
+        updateHiddenBlocksDisplay();
+        newGradient();
+    } else {
+        triggerError("Can't Hide a Selected Block");
+    }
+    
+}
+
+function updateHiddenBlocksDisplay() {
+    // Get the container to hold hidden block items
+    const hiddenBlocksContainer = document.getElementById('hiddenBlocksContainer');
+    hiddenBlocksContainer.innerHTML = ''; // Clear any existing blocks
+
+    // Iterate through the hiddenBlocks array
+    hiddenBlocks.forEach((index) => {
+        // Create the div for the hidden block item
+        const hiddenBlockItem = document.createElement('div');
+        hiddenBlockItem.classList.add('hiddenBlockItem');
+
+        // Create the img element
+        const img = document.createElement('img');
+        img.src = 'https://raw.githubusercontent.com/ZtechNetwork/MCBVanillaResourcePack/master/' + colorArray[index][1];
+
+        // Create the button element
+        const button = document.createElement('button');
+        button.classList.add('deleteBtn');
+
+        // Create the SVG inside the button
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '10');
+        svg.setAttribute('height', '4');
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', '0');
+        line.setAttribute('y1', '2');
+        line.setAttribute('x2', '10');
+        line.setAttribute('y2', '2');
+        line.setAttribute('stroke', 'black');
+        line.setAttribute('stroke-width', '2');
+        line.setAttribute('stroke-linecap', 'round');
+
+        svg.appendChild(line);
+        button.appendChild(svg);
+
+        // Add click event to the delete button to remove the item
+        button.addEventListener('click', () => {
+            // Remove this block item from the DOM
+            hiddenBlocksContainer.removeChild(hiddenBlockItem);
+
+            // Remove the index from the hiddenBlocks array
+            const blockIndex = hiddenBlocks.indexOf(index);
+            if (blockIndex > -1) {
+                hiddenBlocks.splice(blockIndex, 1);
+            }
+            newGradient();
+        });
+
+        // Append the img and button to the hidden block item div
+        hiddenBlockItem.appendChild(img);
+        hiddenBlockItem.appendChild(button);
+
+        // Append the hidden block item to the container
+        hiddenBlocksContainer.appendChild(hiddenBlockItem);
+    });
+}
+
+// Variables to store timeouts
+let showTimeout;
+let hideTimeout;
+
+function triggerError(message) {
+    const errorMessage = document.getElementById('error-message');
+    
+    // Clear any existing timeouts
+    if (showTimeout) clearTimeout(showTimeout);
+    if (hideTimeout) clearTimeout(hideTimeout);
+
+    // Set the new message text
+    errorMessage.innerHTML = message;
+
+    // Show the error message
+    errorMessage.classList.remove('hidden');
+    errorMessage.classList.add('show');
+
+    // Start the timeout to hide the message
+    showTimeout = setTimeout(() => {
+        errorMessage.classList.remove('show');
+
+        // After the animation, hide the message completely
+        hideTimeout = setTimeout(() => {
+            errorMessage.classList.add('hidden');
+        }, 500); // Matches the CSS transition time
+    }, 1000); // Time to show message
+}
+
+let isExpanded = true;
+
+function toggleGradientController() {
+  const controller = document.querySelector('.gradientController');
+  const toggleButton = document.getElementById('toggleButton');
+
+  if (isExpanded) {
+    controller.classList.add('collapsed');
+    controller.style.gap = '0';
+    toggleButton.innerText = 'MORE';
+  } else {
+    controller.classList.remove('collapsed');
+    controller.style.gap = '10px';
+    toggleButton.innerText = 'LESS';
+  }
+
+  isExpanded = !isExpanded;
 }
 
 </script>
