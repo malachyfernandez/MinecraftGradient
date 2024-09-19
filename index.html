@@ -22,6 +22,9 @@ body {
   overflow-x: hidden;
   touch-action: pan-x pan-y;
 }
+div {
+    font-family: 'Poppins', Arial, sans-serif;
+}
 button {
   background-color: rgba(255, 255, 255, 0.05);
   border: none;
@@ -450,14 +453,22 @@ input:hover {
   z-index: 50;
 }
 #blockNameDisplay {
+  color: white;
+  font-size: 12px;
+  text-shadow: 0 0 5px black;
+}
+#clickToExcludeDisplay {
+  color: white;
+  font-size: 8px;
+  text-shadow: 0 0 5px black;
+  font-weight:600;
+}
+.blockNameContainer {
   position: fixed;
   top: 10px;
   left: 10px;
-  color: white;
-  font-size: 12px;
   z-index: 100;
   pointer-events: none; /* So it doesn't interfere with mouse events */
-  text-shadow: 0 0 5px black;
 }
 .blockModal {
   position: fixed;
@@ -637,8 +648,12 @@ body {
 
 <body>
   <div id="error-message" class="error-message hidden"></div>
+  <div class="blockNameContainer">
+    <div id="blockNameDisplay"></div>
+    <div id="clickToExcludeDisplay"></div>  
+  </div>
+  
 
-  <div id="blockNameDisplay"></div>
   <div id="hiddenBlocksContainer"></div>
 
   <div class="blockAlignerContainer">
@@ -731,7 +746,7 @@ body {
         </svg>
       </button>
       <div id="modalBlockName"></div>
-      <button id="hideBlockButton" onclick="hideBlock()">Hide Block</button>
+      <button id="hideBlockButton" onclick="hideBlock()">Exclude Block</button>
     </div>
   </div>
   <div id="blockModalOverlay" class="overlay" onclick="closeBlockModal()"></div>
@@ -939,10 +954,12 @@ function refreshGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
         // Add event listeners for hover
         block.addEventListener('mouseenter', function () {
             document.getElementById('blockNameDisplay').innerText = blockData[0];
+            document.getElementById('clickToExcludeDisplay').innerText = "CLICK TO EXCLUDE";
         });
 
         block.addEventListener('mouseleave', function () {
             document.getElementById('blockNameDisplay').innerText = '';
+            document.getElementById('clickToExcludeDisplay').innerText = "";
         });
 
         // Add click event for the next feature
