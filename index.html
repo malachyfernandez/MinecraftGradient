@@ -584,16 +584,12 @@ input:hover {
     background-color: rgb(130, 80, 140);
 }
 
-body {
-    font-family: Arial, sans-serif;
-}
-
-.error-message {
+.importantMessage {
     position: fixed;
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #f44336;
+    background-color: blue;
     color: white;
     padding: 5px 15px;
     border-radius: 4px;
@@ -601,16 +597,17 @@ body {
     opacity: 0;
     transition: top 0.5s ease, opacity 0.5s ease;
     z-index: 1000;
-    max-width: 90%;
+    margin:0;
+    text-align: center;
 }
 
-.error-message.show {
+.importantMessage.show {
     top: 10px;
     opacity: 1;
 }
 
 .hidden {
-    display: none;
+    /* display: none; */
 }
 
 /* When collapsed */
@@ -647,7 +644,7 @@ body {
 </head>
 
 <body>
-  <div id="error-message" class="error-message hidden"></div>
+  <div id="importantMessage" class="importantMessage hidden"></div>
   <div class="blockNameContainer">
     <div id="blockNameDisplay"></div>
     <div id="clickToExcludeDisplay"></div>  
@@ -927,6 +924,11 @@ const colorArray =
 ];
 
 let hiddenBlocks = [];
+
+// Modify the close button SVG icon in HTML accordingly.
+let tipTimeout = setTimeout(function() {
+    triggerMessage("&#128161; click on a block to exclude it", "rgb(100,80,125)");
+}, 5000);
 
 function refreshGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
 
@@ -1404,7 +1406,7 @@ function selectBlock(block) {
         if (hiddenBlocks.indexOf(blockIndex) !== -1) {
             // Remove the item at that index from hiddenBlocks
             hiddenBlocks.splice(hiddenBlocks.indexOf(blockIndex), 1);
-            triggerError("Unhid Block");
+            triggerMessage("Removed Excluded Block", "rgb(100,80,125)");
         }
     }
     
@@ -1439,6 +1441,7 @@ document.getElementById('overlay').addEventListener('click', closeModal);
 let currentBlockData; // To keep track of the block in the modal
 
 function openBlockModal(blockData) {
+  clearTimeout(tipTimeout);
   currentBlockData = blockData;
   document.getElementById('modalBlockImage').src = 'https://raw.githubusercontent.com/ZtechNetwork/MCBVanillaResourcePack/master/' + blockData[1];
   document.getElementById('modalBlockName').innerText = blockData[0];
@@ -1451,16 +1454,18 @@ function closeBlockModal() {
   document.getElementById('blockModalOverlay').style.display = 'none';
 }
 
-// Modify the close button SVG icon in HTML accordingly.
-
 function hideBlock() {
-    if (currentBlockData[2].toString() != rgb1.toString() && currentBlockData[2].toString() != rgb2.toString()) {
-        hiddenBlocks.push(colorArray.indexOf(currentBlockData));
-        closeBlockModal();
-        updateHiddenBlocksDisplay();
-        newGradient();
+    if (currentBlockData[2].toString() != rgb1.toString()) {
+        if (currentBlockData[2].toString() != rgb2.toString()) {
+            hiddenBlocks.push(colorArray.indexOf(currentBlockData));
+            closeBlockModal();
+            updateHiddenBlocksDisplay();
+            newGradient();
+        } else {
+            triggerMessage("Can't Exclude The Ending Block Of The Gradient", "#f44336");
+        }
     } else {
-        triggerError("Can't Hide a Selected Block");
+        triggerMessage("Can't Exclude The Starting Block Of The Gradient", "#f44336");
     }
     
 }
@@ -1527,9 +1532,11 @@ function updateHiddenBlocksDisplay() {
 let showTimeout;
 let hideTimeout;
 
-function triggerError(message) {
-    const errorMessage = document.getElementById('error-message');
+function triggerMessage(message, color) {
+    const errorMessage = document.getElementById('importantMessage');
     
+    errorMessage.style.backgroundColor = color;
+
     // Clear any existing timeouts
     if (showTimeout) clearTimeout(showTimeout);
     if (hideTimeout) clearTimeout(hideTimeout);
@@ -1549,7 +1556,7 @@ function triggerError(message) {
         hideTimeout = setTimeout(() => {
             errorMessage.classList.add('hidden');
         }, 500); // Matches the CSS transition time
-    }, 1000); // Time to show message
+    }, 3000); // Time to show message
 }
 
 let isExpanded = true;
