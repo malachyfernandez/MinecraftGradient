@@ -587,11 +587,9 @@ input:hover {
     background-color: rgb(130, 80, 140);
 }
 
-.importantMessage {
+.disappearingMessage {
     position: fixed;
     top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: blue;
     color: white;
     padding: 5px 15px;
@@ -604,13 +602,26 @@ input:hover {
     text-align: center;
 }
 
-.importantMessage.show {
+.persistentMessageContainer {
+    position: fixed;
+    top: -50px;
+    background-color: blue;
+    transition: top 0.5s ease, opacity 0.5s ease;
+    display:flex;
+    padding: 5px 38px 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    z-index: 1000;
+    margin:0;
+    max-width:90%;
+}
+.show {
     top: 10px;
     opacity: 1;
 }
+.persistentMessage{
+    font-size: 14px;
 
-.hidden {
-    /* display: none; */
 }
 
 /* When collapsed */
@@ -643,12 +654,38 @@ input:hover {
     font-weight: 800;
     border-radius:13px;
 }
-
+.messageCloseBtn {
+    position:absolute;
+    top:1px;
+    right:5px;
+    height:25px;
+    width:25px;
+    padding:0;
+    outline:none;
+    background:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.messageCloseBtn svg {
+    width: 15px;
+    height: 15px;
+}
 </style>
 </head>
 
 <body>
-  <div id="importantMessage" class="importantMessage hidden"></div>
+  <div id="disappearingMessage" class="disappearingMessage hidden"></div>
+  
+  <div class="persistentMessageContainer" id="persistentMessageContainer">
+    <div id="persistentMessage" class="persistentMessage hidden">ll</div>
+    <button class="messageCloseBtn" onclick="hidePersistentMessage()">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L16 16 M16 4 L4 16" stroke="lightGray" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+  </div>
+
   <div class="blockNameContainer">
     <div id="blockNameDisplay"></div>
     <div id="clickToExcludeDisplay"></div>  
@@ -931,7 +968,7 @@ let hiddenBlocks = [];
 
 // Modify the close button SVG icon in HTML accordingly.
 let tipTimeout = setTimeout(function() {
-    triggerMessage("&#128161; click on a block to exclude it", "rgb(100,80,125)");
+    triggerPersistentMessage("&#128161; Click on a block to exclude it!", "rgb(100,80,125)");
 }, 5000);
 
 function refreshGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
@@ -1538,7 +1575,7 @@ let showTimeout;
 let hideTimeout;
 
 function triggerMessage(message, color) {
-    const errorMessage = document.getElementById('importantMessage');
+    const errorMessage = document.getElementById('disappearingMessage');
     
     errorMessage.style.backgroundColor = color;
 
@@ -1550,19 +1587,34 @@ function triggerMessage(message, color) {
     errorMessage.innerHTML = message;
 
     // Show the error message
-    errorMessage.classList.remove('hidden');
+
     errorMessage.classList.add('show');
 
     // Start the timeout to hide the message
     showTimeout = setTimeout(() => {
         errorMessage.classList.remove('show');
 
-        // After the animation, hide the message completely
-        hideTimeout = setTimeout(() => {
-            errorMessage.classList.add('hidden');
-        }, 500); // Matches the CSS transition time
     }, 3000); // Time to show message
 }
+
+
+function triggerPersistentMessage(message, color) {
+    const errorMessage = document.getElementById('persistentMessageContainer');
+    
+    errorMessage.style.backgroundColor = color;
+
+    // Set the new message text
+    document.getElementById('persistentMessage').innerHTML = message;
+
+    errorMessage.classList.add('show');
+}
+
+function hidePersistentMessage() {
+    const errorMessage = document.getElementById('persistentMessageContainer');
+
+    errorMessage.classList.remove('show');
+}
+
 
 let isExpanded = true;
 
