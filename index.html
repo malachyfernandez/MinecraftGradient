@@ -383,14 +383,16 @@ input:hover {
   background: #555; 
 }
 .modalHeader {
-    width: calc(100% - 10px);
+    width: 100px;
     display: flex;
     align-items: center;
-    margin: 5px 5px 10px 5px;
+    padding: 5px 5px 10px 5px;
     gap:5px;
+    box-sizing:border-box;
 }
 
 .closeBtn {
+    flex-shrink: 0;
     width: 40px;
     height: 40px;
     padding:0;
@@ -411,7 +413,7 @@ input:hover {
 }
 
 .searchBar {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     margin:0;
     background-color: rgba(255, 255, 255, 0.05);
     border: none;
@@ -423,6 +425,7 @@ input:hover {
     align-items: center;
     height:40px;
     box-sizing: border-box; 
+    min-width:0px;
 }
 
 .gridBlock {
@@ -626,18 +629,19 @@ input:hover {
 }
 #toggleButton {
     position:fixed;
-    top:2px;
+    top:3px;
     right:15px;
     padding:0;
     font-size:10px;
     display:flex;
     align-items: center;
     justify-content:center;
-    height:20px;
-    width:50px;
-    font-size: 12px;
+    height:23px;
+    width:55px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.5);
-    font-weight: bold;
+    font-weight: 800;
+    border-radius:13px;
 }
 
 </style>
@@ -720,7 +724,7 @@ input:hover {
 </div>
 
 <div id="modal" class="blockSelectionModal">
-    <div class="modalHeader">
+    <div class="modalHeader" id="modalHeader">
         <input type="text" id="searchBar" class="searchBar" placeholder="Search blocks..." oninput="filterBlocks()">
         <button class="closeBtn" onclick="closeModal()">
             <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -1348,6 +1352,7 @@ function adjustModalWidth() {
 
     // Set the modal's width dynamically
     gridContainer.style.width = `${newModalWidth}px`;
+    document.getElementById('modalHeader').style.width = `${newModalWidth}px`;
 }
 
 // Add event listener to adjust the modal width when the window is resized
