@@ -1201,7 +1201,7 @@ let tipTimeout = setTimeout(function() {
 let hasTriggered = false;
 
 new ResizeObserver(entries => {
-  if (!hasTriggered && entries[0].target.scrollWidth > entries[0].target.clientWidth) {
+  if (!hasTriggered && entries[0].target.scrollWidth > entries[0].target.clientWidth && hiddenBlocks.length > 1) {
     hasTriggered = true; // Set the flag to true to prevent future triggers
     setTimeout(function() {
         triggerPersistentMessage("&#128161; Too many excluded blocks? <br> Hide them in options!", "rgb(100,80,125)");
