@@ -2056,6 +2056,9 @@ function togglePreset(presetID) {
         hiddenBlocks.push(item);
     }
     newGradient();
+    
+    let presetMessages = ["Excludes creative-only blocks","Excludes blocks with inventories or UI's"];
+    triggerMessage(presetMessages[presetID], "rgb(100,80,125)");
 }
 
 </script>
