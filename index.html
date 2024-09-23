@@ -26,17 +26,17 @@ div {
     font-family: 'Poppins', Arial, sans-serif;
 }
 button {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.08);
   border: none;
   outline: rgba(255, 255, 255, 0.2) solid 1.5px;
   color: white;
   padding: 15px 32px;
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius:10px;
-  font-weight: bold;
+  font-weight: 600;
 }
 input{
     font-family: 'Poppins', Arial, sans-serif;
@@ -131,9 +131,9 @@ button:hover {
 .gradientController {
     width:100%;
     outline: rgba(255, 255, 255, 0.2) solid 1.5px;
-    background-color: rgba(10,0,25,.7);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background-color: rgba(10,0,25,0.6);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     color: white;
     padding: 15px;
     font-size: 16px;
@@ -142,7 +142,7 @@ button:hover {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap:10px;
+    gap:3px;
     pointer-events: auto;
     transition: gap 0.3s ease;
 }
@@ -158,7 +158,7 @@ button:hover {
 }
 
 @media screen and (min-width: 500px) {
-    .gradientController {
+    .settingsPanel {
       width: 350px;
     }
 }
@@ -177,8 +177,8 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 40px;
+    width: 10px;
+    height: 35px;
     background-color: rgba(80, 40, 100, 0.7);
     outline: rgb(120, 80, 130) solid 2px;
     border-radius: 5px;
@@ -186,10 +186,16 @@ input[type="range"]::-webkit-slider-thumb {
     position: relative;
 }
 
+input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: rgba(120, 80, 130, 0.7);
+    outline: rgb(150, 110, 150) solid 3px;
+}
+
 input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 40px;
+    width: 10px;
+    height: 35px;
     background-color: rgba(80, 40, 100, 0.7);
     outline: rgb(120, 80, 130) solid 2px;
     border-radius: 5px;
@@ -201,15 +207,15 @@ input[type="range"]:focus {
     outline: none;
 }
 .slider {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.08);
     border: none;
-    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+    /* outline: rgba(255, 255, 255, 0.2) solid 1.5px; */
     color: white;
     border-radius: 20px;
-    padding: 15px;
-    margin-top:5px;
+    padding: 13px;
+    margin-top:3px;
     display: flex;
-    gap: 15px;
+    gap: 13px;
 }
 .sliderInput {
     background-color: rgba(255, 255, 255, 0.05);
@@ -217,10 +223,10 @@ input[type="range"]:focus {
     outline: rgba(255, 255, 255, 0.2) solid 1.5px;
     color: white;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     border-radius: 10px;
-    width: 50px;
+    width: 40px;
     aspect-ratio: 1 / 1;
     padding:0;
 }
@@ -234,35 +240,34 @@ input:hover {
     /*outline: rgba(255, 255, 255, 0.3) solid 2.5px;*/
     background-color: rgba(255, 255, 255, 0.1);
 }
-.zoomBtns {
-    height:45px;
+.topSettingRow {
+    height:40px;
     display: flex;
-    justify-content: flex-end;
-    /* outline: rgba(255, 255, 255, 0.2) solid 1.5px; */
-    background: none;
-    /* background-color: rgb(10,0,25); */
-    border-radius: 25px;
-    gap:3px;
+    justify-content: space-between;
 }
 .halfBtn {
-    width:50px;
+    width:45px;
     padding:0;
     margin:0;
     outline: rgba(255, 255, 255, 0.2) solid 1.5px;
-    background-color: rgba(10,0,25,0.7);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
+    background-color: rgba(10,0,25,0.5);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    display:flex;
     align-items: center;
+    justify-content:center;
     pointer-events: auto;
+    font-size:18px;
+    font-weight:bold;
 }
 .halfBtn:hover {
     background-color: rgba(65,50,80,0.7);
 }
 #zoomOut {
-    border-radius: 5px 25px 25px 5px;
+    border-radius: 5px 20px 20px 5px;
 }
 #zoomIn {
-    border-radius: 25px 5px 5px 25px;
+    border-radius: 20px 5px 5px 20px;
 }
 .BtnAndLabelContainer {
     display: flex;
@@ -276,17 +281,32 @@ input:hover {
 }
 .dropdownBtn {
     width: 80px;
-    height: 50px;
-    border-radius: 25px;
+    height: 40px;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     padding: 0;
 }
-.refreshBtn {
-    min-width: 50px;
-    height: 50px;
+.dropdownTextBtn {
+    height: 35px;
+    margin: 0;
+    outline-offset:1px;
+    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+    background-color: rgba(10,0,25,0.5);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 10px;
+    pointer-events: auto;
+}
+.optionsBtn {
+    min-width: 40px;
+    height: 40px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -294,7 +314,7 @@ input:hover {
     padding:0;
     gap:6px;
 }
-.refreshBtnContainer {
+.optionsBtnContainer {
     flex: 1;
 }
 #refreshLabel {
@@ -305,7 +325,7 @@ input:hover {
     display: block; /* Make sure images are treated as block elements */
     padding: 0; /* Remove any padding around images */
     margin: 0; /* Remove any margin around images */
-    width: 30px; /* Set the width to 10px */
+    width: 27px; /* Set the width to 10px */
     aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
     image-rendering: -webkit-optimize-contrast; /* Chrome, Edge, Opera, and Safari */
     image-rendering: pixelated;
@@ -324,9 +344,9 @@ input:hover {
   font-size: 40px;
 }
 
-@media (min-width: 370px) {
-  .refreshBtn::after {
-    content: 'Refresh';
+@media (min-width: 360px) {
+  .optionsBtn::after {
+    content: 'Options';
   }
 }
 
@@ -534,7 +554,7 @@ input:hover {
     text-transform: capitalize;
     font-weight: bold;
 }
-#hiddenBlocksContainer {
+.hiddenBlocksContainer.outModal {
   position: fixed;
   top: 20px; /* Adjust as needed to not overlap with blockNameDisplay */
   right: 20px;
@@ -546,11 +566,22 @@ input:hover {
   flex-wrap: wrap;
   pointer-events: none;
 }
-
+.hiddenBlocksCondensedContainer {
+  position: fixed;
+  top: 20px; /* Adjust as needed to not overlap with blockNameDisplay */
+  right: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  z-index: 10;
+  width:calc(100% - 40px);
+  flex-wrap: wrap;
+  pointer-events: none;
+}
 .hiddenBlockItem {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   pointer-events: auto;
 }
 
@@ -614,6 +645,7 @@ input:hover {
     z-index: 1000;
     margin:0;
     max-width:90%;
+    min-height: 26px;
 }
 .show {
     top: 10px;
@@ -636,7 +668,7 @@ input:hover {
   transition: max-height 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap:5px;
 }
 #toggleButton {
     position:fixed;
@@ -671,6 +703,113 @@ input:hover {
     width: 15px;
     height: 15px;
 }
+.refreshBtn {
+    height: 40px;
+    aspect-ratio: 1 / 1;
+    padding:0;
+    margin:0;
+    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+    background-color: rgba(10,0,25,0.5);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    border-radius:50%;
+}
+.zoomBtns {
+    display:flex;
+    flex-direction: row;
+    gap:3px;
+}
+.refreshBtn:hover {
+    background-color: rgba(65,50,80,0.7);
+}
+.excludeModal {
+  position: fixed;
+  width: 80%;
+  max-width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+  background-color: rgba(10, 0, 25, 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+  border-radius: 30px;
+  animation: fadeIn 0.5s;
+  z-index: 12;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap:20px;
+}
+.hiddenBlocksContainer.inModal {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  z-index: 10;
+  width:calc(100% - 40px);
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+.NoExcludedBlocksDisplay {
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+.optionsModal {
+  position: fixed;
+  width: 80%;
+  max-width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+  background-color: rgba(10, 0, 25, 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px;
+  border-radius: 30px;
+  animation: fadeIn 0.5s;
+  z-index: 12;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap:20px;
+}
+.multiselectBtn {
+    flex:1;
+    min-width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+    gap:6px;
+    font-size:14px;
+}
+.multiselectBtn.selected {
+    outline: rgba(255, 255, 255, 0.9) solid 2px;
+    background:rgb(100,70,125);
+}
+.multiselectRow {
+    display: flex;
+    flex-wrap: wrap;
+    width:100%;
+    max-width:300px;
+    gap:5px;
+}
+#hiddenBlocksCondensedContainer {
+    display:none;
+}
 </style>
 </head>
 
@@ -692,7 +831,23 @@ input:hover {
   </div>
   
 
-  <div id="hiddenBlocksContainer"></div>
+  <div id="hiddenBlocksContainer" class="hiddenBlocksContainer outModal">
+    <!-- <button class="dropdownTextBtn" onclick="openExcludeModal()">
+        Exclude
+        <svg class="dropdown-arrow" width="10px" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 2 L10 8 L18 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button> -->
+  </div>
+  
+  <div id="hiddenBlocksCondensedContainer" class="hiddenBlocksCondensedContainer outModal">
+    <button class="dropdownTextBtn" onclick="openExcludeModal()">
+        <span id="condensedExcludedText">0 Excluded</span>
+        <svg class="dropdown-arrow" width="10px" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 2 L10 8 L18 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+  </div>
 
   <div class="blockAlignerContainer">
     <div class="blockScalerContainer">
@@ -702,9 +857,17 @@ input:hover {
   </div>
 
 <div class="settingsPanel">
-  <div class="zoomBtns">
+  <div class="topSettingRow">
+    <button class="refreshBtn" onclick="newGradient()">
+        <svg width="22" height="18" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5372 8.68694C15.6405 8.2858 15.399 7.87692 14.9979 7.77367C14.5967 7.67043 14.1878 7.91192 14.0846 8.31306L15.5372 8.68694ZM14.8109 5.5L14.5014 6.18316C14.8556 6.34362 15.2737 6.20679 15.4644 5.86796L14.8109 5.5ZM2.46264 5.31306C2.35939 5.7142 2.60088 6.12308 3.00202 6.22633C3.40316 6.32958 3.81205 6.08808 3.91529 5.68695L2.46264 5.31306ZM3.18896 8.5L3.49846 7.81683C3.14427 7.65637 2.72618 7.79322 2.53542 8.13206L3.18896 8.5ZM17.1535 2.86796C17.3568 2.50702 17.2289 2.04968 16.868 1.84647C16.507 1.64325 16.0497 1.7711 15.8465 2.13204L17.1535 2.86796ZM11.8095 3.31684C11.4322 3.14591 10.9878 3.3132 10.8168 3.6905C10.6459 4.06779 10.8132 4.51223 11.1905 4.68316L11.8095 3.31684ZM0.846455 11.1321C0.643248 11.493 0.771119 11.9503 1.13206 12.1535C1.493 12.3568 1.95034 12.2289 2.15355 11.8679L0.846455 11.1321ZM6.19051 10.6832C6.56781 10.8541 7.01224 10.6868 7.18316 10.3095C7.35409 9.93219 7.1868 9.48776 6.80949 9.31684L6.19051 10.6832ZM14.0846 8.31306C13.5017 10.5776 11.4452 12.25 8.99994 12.25V13.75C12.1462 13.75 14.788 11.5981 15.5372 8.68694L14.0846 8.31306ZM8.99994 1.75C11.4452 1.75 13.5017 3.42242 14.0846 5.68695L15.5372 5.31306C14.788 2.4019 12.1462 0.25 8.99994 0.25V1.75ZM3.91529 5.68695C4.49814 3.42242 6.55468 1.75 8.99994 1.75V0.25C5.85368 0.25 3.21192 2.4019 2.46264 5.31306L3.91529 5.68695ZM8.99994 12.25C6.55468 12.25 4.49814 10.5776 3.91529 8.31305L2.46264 8.68694C3.21192 11.5981 5.85368 13.75 8.99994 13.75V12.25ZM15.4644 5.86796L17.1535 2.86796L15.8465 2.13204L14.1574 5.13204L15.4644 5.86796ZM15.1204 4.81684L11.8095 3.31684L11.1905 4.68316L14.5014 6.18316L15.1204 4.81684ZM2.53542 8.13206L0.846455 11.1321L2.15355 11.8679L3.84251 8.86794L2.53542 8.13206ZM2.87947 9.18316L6.19051 10.6832L6.80949 9.31684L3.49846 7.81683L2.87947 9.18316Z" fill="white"/>
+        </svg>
+        
+    </button>
+    <div class="zoomBtns">
     <button class="halfBtn" id="zoomIn" onclick="zoomIn()">+</button>
     <button class="halfBtn" id="zoomOut" onclick="zoomOut()">-</button>
+    </div>
   </div>
   <div class="gradientControllerRightAligner">
     <div class="gradientController">
@@ -728,13 +891,15 @@ input:hover {
                     </svg>
                 </button>
             </div>
-            <div class="BtnAndLabelContainer refreshBtnContainer">
+            
+            <div class="BtnAndLabelContainer optionsBtnContainer">
                 <label id="refreshLabel"> &nbsp</label>
-                <button class="refreshBtn" onclick="newGradient()">
-                    <svg width="22" height="18" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.5372 8.68694C15.6405 8.2858 15.399 7.87692 14.9979 7.77367C14.5967 7.67043 14.1878 7.91192 14.0846 8.31306L15.5372 8.68694ZM14.8109 5.5L14.5014 6.18316C14.8556 6.34362 15.2737 6.20679 15.4644 5.86796L14.8109 5.5ZM2.46264 5.31306C2.35939 5.7142 2.60088 6.12308 3.00202 6.22633C3.40316 6.32958 3.81205 6.08808 3.91529 5.68695L2.46264 5.31306ZM3.18896 8.5L3.49846 7.81683C3.14427 7.65637 2.72618 7.79322 2.53542 8.13206L3.18896 8.5ZM17.1535 2.86796C17.3568 2.50702 17.2289 2.04968 16.868 1.84647C16.507 1.64325 16.0497 1.7711 15.8465 2.13204L17.1535 2.86796ZM11.8095 3.31684C11.4322 3.14591 10.9878 3.3132 10.8168 3.6905C10.6459 4.06779 10.8132 4.51223 11.1905 4.68316L11.8095 3.31684ZM0.846455 11.1321C0.643248 11.493 0.771119 11.9503 1.13206 12.1535C1.493 12.3568 1.95034 12.2289 2.15355 11.8679L0.846455 11.1321ZM6.19051 10.6832C6.56781 10.8541 7.01224 10.6868 7.18316 10.3095C7.35409 9.93219 7.1868 9.48776 6.80949 9.31684L6.19051 10.6832ZM14.0846 8.31306C13.5017 10.5776 11.4452 12.25 8.99994 12.25V13.75C12.1462 13.75 14.788 11.5981 15.5372 8.68694L14.0846 8.31306ZM8.99994 1.75C11.4452 1.75 13.5017 3.42242 14.0846 5.68695L15.5372 5.31306C14.788 2.4019 12.1462 0.25 8.99994 0.25V1.75ZM3.91529 5.68695C4.49814 3.42242 6.55468 1.75 8.99994 1.75V0.25C5.85368 0.25 3.21192 2.4019 2.46264 5.31306L3.91529 5.68695ZM8.99994 12.25C6.55468 12.25 4.49814 10.5776 3.91529 8.31305L2.46264 8.68694C3.21192 11.5981 5.85368 13.75 8.99994 13.75V12.25ZM15.4644 5.86796L17.1535 2.86796L15.8465 2.13204L14.1574 5.13204L15.4644 5.86796ZM15.1204 4.81684L11.8095 3.31684L11.1905 4.68316L14.5014 6.18316L15.1204 4.81684ZM2.53542 8.13206L0.846455 11.1321L2.15355 11.8679L3.84251 8.86794L2.53542 8.13206ZM2.87947 9.18316L6.19051 10.6832L6.80949 9.31684L3.49846 7.81683L2.87947 9.18316Z" fill="white"/>
-                    </svg>
-                    
+                <button class="optionsBtn" onclick="openOptionsModal()">
+                    <svg width="20" height="20" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.09829 3C4.2742 3.79766 4.81906 1.55124 3.15953 3.23413C1.5 4.91702 3.76332 4.35273 3 6.09829C2.23668 7.84384 1 6.09829 1 8.5C1 10.9017 2.08244 8.80342 3 10.9017C3.91756 13 1.56136 12.1452 3.15953 13.7659C4.7577 15.3865 4.19658 13.1684 6.09829 14C8 14.8316 6.09829 16 8.5 16C10.9017 16 9.03042 14.8183 10.9017 14C12.773 13.1817 12.3703 15.2567 13.8405 13.7659C15.3106 12.275 13.3011 12.5 14 10.9017C14.6989 9.30342 16 11 16 8.5C16 6 14.6989 7.69658 14 6.09829C13.3011 4.5 15.2959 4.71009 13.8405 3.23413C12.385 1.75817 12.5 3.69892 10.9017 3C9.30342 2.30108 10.9017 1 8.5 1C6.09829 1 7.92238 2.20234 6.09829 3Z" stroke="#fff" stroke-width="1.5"/>
+                        <path d="M10.75 8.5C10.75 9.74264 9.74264 10.75 8.5 10.75C7.25736 10.75 6.25 9.74264 6.25 8.5C6.25 7.25736 7.25736 6.25 8.5 6.25C9.74264 6.25 10.75 7.25736 10.75 8.5Z" stroke="#fff" stroke-width="1.5"/>
+                        </svg>
+                        
                 </button>
             </div>
 
@@ -772,7 +937,7 @@ input:hover {
     <div id="gridContainer"></div>
 </div>
 <div id="overlay" class="overlay"></div>
-<div id="loadingOverlay" class="overlay">loading...</div>
+<div id="loadingOverlay" class="overlay">refreshing...</div>
 
 <!-- Block Modal -->
 <div id="blockInfoModal" class="blockModal">
@@ -789,6 +954,68 @@ input:hover {
   </div>
   <div id="blockModalOverlay" class="overlay" onclick="closeBlockModal()"></div>
   
+
+<div id="excludeModal" class="excludeModal">
+    <button class="closeBtn closeInfoBtn" onclick="closeExcludeModal()">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L16 16 M16 4 L4 16" stroke="rgb(150, 100, 160)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+    <div class="hiddenBlocksContainer inModal">
+        <div class="NoExcludedBlocksDisplay"><span style="font-size:14px;">No excluded blocks</span><span style="font-size:12px;">Click a block in the gradient to exclude it.</span></div>
+    </div>
+</div>
+<div id="excludeModalOverlay" class="overlay" onclick="closeExcludeModal()"></div>
+
+<div id="optionsModal" class="optionsModal">
+    <button class="closeBtn closeInfoBtn" onclick="closeOptionsModal()">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L16 16 M16 4 L4 16" stroke="rgb(150, 100, 160)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+    
+    <div class="BtnAndLabelContainer optionsBtnContainer">
+        <label>EXCLUDED BLOCKS</label>
+        <div class="multiselectRow">
+            <button class="multiselectBtn selected" id="seperatedBtn" onclick="seperated()">
+                <svg width="80" height="26" viewBox="0 0 41 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40.5 2.5H37.5C35.8431 2.5 34.5 3.84315 34.5 5.5V11.5C34.5 13.1569 35.8431 14.5 37.5 14.5H40.5" stroke="white"/>
+                    <path d="M15 3.5C15 5.433 13.433 7 11.5 7C9.567 7 8 5.433 8 3.5C8 1.567 9.567 0 11.5 0C13.433 0 15 1.567 15 3.5Z" fill="white"/>
+                    <path d="M10 3.5H13" stroke="black" stroke-linecap="round"/>
+                    <mask id="mask0_215_53" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="2" width="13" height="13">
+                    <rect x="0.5" y="2.5" width="12" height="12" rx="2.5" stroke="white"/>
+                    </mask>
+                    <g mask="url(#mask0_215_53)">
+                    <path d="M7 3.5C7 1.01472 9.01472 -1 11.5 -1C13.9853 -1 16 1.01472 16 3.5H17V-2H7V3.5Z" fill="white"/>
+                    <path d="M16 3.5C16 5.98528 13.9853 8 11.5 8H17V3.5H16Z" fill="white"/>
+                    <path d="M-2 16H17V8H11.5C9.01472 8 7 5.98528 7 3.5V-2H-2V16Z" fill="white"/>
+                    </g>
+                    <path d="M32 3.5C32 5.433 30.433 7 28.5 7C26.567 7 25 5.433 25 3.5C25 1.567 26.567 0 28.5 0C30.433 0 32 1.567 32 3.5Z" fill="white"/>
+                    <path d="M27 3.5H30" stroke="black" stroke-linecap="round"/>
+                    <mask id="mask1_215_53" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="17" y="2" width="13" height="13">
+                    <rect x="17.5" y="2.5" width="12" height="12" rx="2.5" stroke="white"/>
+                    </mask>
+                    <g mask="url(#mask1_215_53)">
+                    <path d="M24 3.5C24 1.01472 26.0147 -1 28.5 -1C30.9853 -1 33 1.01472 33 3.5H34V-2H24V3.5Z" fill="white"/>
+                    <path d="M33 3.5C33 5.98528 30.9853 8 28.5 8H34V3.5H33Z" fill="white"/>
+                    <path d="M15 16H34V8H28.5C26.0147 8 24 5.98528 24 3.5V-2H15V16Z" fill="white"/>
+                    </g>
+                </svg>  
+                Seperated      
+            </button>
+            <button class="multiselectBtn" id="condensedBtn" onclick="condensed()">
+                <svg width="80" height="26" viewBox="0 0 41 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1.5" y="0.5" width="37" height="14" rx="7" stroke="white"/>
+                    <path d="M34 6.5L30.5 9L27 6.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="12" y="4" width="12.5" height="7" rx="1.5" fill="white" fill-opacity="0.29"/>
+                    <rect x="6" y="4" width="5" height="7" rx="1.5" fill="white" fill-opacity="0.29"/>
+                </svg>
+                Condensed
+            </button>
+        </div>
+    </div>
+</div>
+<div id="optionsModalOverlay" class="overlay" onclick="closeOptionsModal()"></div>
 
 <script>
 
@@ -970,6 +1197,17 @@ let hiddenBlocks = [];
 let tipTimeout = setTimeout(function() {
     triggerPersistentMessage("&#128161; Click on a block to exclude it!", "rgb(100,80,125)");
 }, 5000);
+
+let hasTriggered = false;
+
+new ResizeObserver(entries => {
+  if (!hasTriggered && entries[0].target.scrollWidth > entries[0].target.clientWidth) {
+    hasTriggered = true; // Set the flag to true to prevent future triggers
+    setTimeout(function() {
+        triggerPersistentMessage("&#128161; Too many excluded blocks? <br> Hide them in options!", "rgb(100,80,125)");
+    }, 1000);
+  }
+}).observe(document.getElementById("hiddenBlocksContainer"));
 
 function refreshGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
 
@@ -1511,65 +1749,88 @@ function hideBlock() {
     }
     
 }
-
 function updateHiddenBlocksDisplay() {
-    // Get the container to hold hidden block items
-    const hiddenBlocksContainer = document.getElementById('hiddenBlocksContainer');
-    hiddenBlocksContainer.innerHTML = ''; // Clear any existing blocks
+    // Get the element with the class 'NoExcludedBlocksDisplay'
+    const noExcludedBlocksDisplay = document.querySelector('.NoExcludedBlocksDisplay');
 
-    // Iterate through the hiddenBlocks array
-    hiddenBlocks.forEach((index) => {
-        // Create the div for the hidden block item
-        const hiddenBlockItem = document.createElement('div');
-        hiddenBlockItem.classList.add('hiddenBlockItem');
+    // Get all containers with the class 'hiddenBlocksContainer'
+    const hiddenBlocksContainers = document.getElementsByClassName('hiddenBlocksContainer');
 
-        // Create the img element
-        const img = document.createElement('img');
-        img.src = 'https://raw.githubusercontent.com/ZtechNetwork/MCBVanillaResourcePack/master/' + colorArray[index][1];
+    // Check if there are any hidden blocks
+    if (hiddenBlocks.length === 0) {
+        // Show the "No Excluded Blocks" display
+        noExcludedBlocksDisplay.style.display = 'flex';
+        document.getElementById("condensedExcludedText").innerHTML = "Exclude";
+    } else {
+        // Hide the "No Excluded Blocks" display
+        noExcludedBlocksDisplay.style.display = 'none';
 
-        // Create the button element
-        const button = document.createElement('button');
-        button.classList.add('deleteBtn');
+        document.getElementById("condensedExcludedText").innerHTML = hiddenBlocks.length + " Excluded";
+    }
 
-        // Create the SVG inside the button
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', '10');
-        svg.setAttribute('height', '4');
+    // Iterate over each container
+    Array.from(hiddenBlocksContainers).forEach((hiddenBlocksContainer) => {
+        // Get all hidden block items within this container
+        const hiddenBlockItems = hiddenBlocksContainer.getElementsByClassName('hiddenBlockItem');
 
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', '0');
-        line.setAttribute('y1', '2');
-        line.setAttribute('x2', '10');
-        line.setAttribute('y2', '2');
-        line.setAttribute('stroke', 'black');
-        line.setAttribute('stroke-width', '2');
-        line.setAttribute('stroke-linecap', 'round');
+        // Convert the HTMLCollection to an array and remove each element
+        Array.from(hiddenBlockItems).forEach(item => item.remove());
 
-        svg.appendChild(line);
-        button.appendChild(svg);
+        // Iterate through the hiddenBlocks array (assuming it's a global array or scoped properly)
+        hiddenBlocks.forEach((index) => {
+            // Create the div for the hidden block item
+            const hiddenBlockItem = document.createElement('div');
+            hiddenBlockItem.classList.add('hiddenBlockItem');
 
-        // Add click event to the delete button to remove the item
-        button.addEventListener('click', () => {
-            // Remove this block item from the DOM
-            hiddenBlocksContainer.removeChild(hiddenBlockItem);
+            // Create the img element
+            const img = document.createElement('img');
+            img.src = 'https://raw.githubusercontent.com/ZtechNetwork/MCBVanillaResourcePack/master/' + colorArray[index][1];
 
-            // Remove the index from the hiddenBlocks array
-            const blockIndex = hiddenBlocks.indexOf(index);
-            if (blockIndex > -1) {
-                hiddenBlocks.splice(blockIndex, 1);
-            }
-            newGradient();
+            // Create the button element
+            const button = document.createElement('button');
+            button.classList.add('deleteBtn');
+
+            // Create the SVG inside the button
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '10');
+            svg.setAttribute('height', '4');
+
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', '0');
+            line.setAttribute('y1', '2');
+            line.setAttribute('x2', '10');
+            line.setAttribute('y2', '2');
+            line.setAttribute('stroke', 'black');
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('stroke-linecap', 'round');
+
+            svg.appendChild(line);
+            button.appendChild(svg);
+
+            // Add click event to the delete button to remove the item
+            button.addEventListener('click', () => {
+                // Remove this block item from the DOM
+                hiddenBlocksContainer.removeChild(hiddenBlockItem);
+
+                // Remove the index from the hiddenBlocks array
+                const blockIndex = hiddenBlocks.indexOf(index);
+                if (blockIndex > -1) {
+                    hiddenBlocks.splice(blockIndex, 1);
+                }
+                updateHiddenBlocksDisplay();
+
+                newGradient();
+            });
+
+            // Append the img and button to the hidden block item div
+            hiddenBlockItem.appendChild(img);
+            hiddenBlockItem.appendChild(button);
+
+            // Append the hidden block item to the container
+            hiddenBlocksContainer.appendChild(hiddenBlockItem);
         });
-
-        // Append the img and button to the hidden block item div
-        hiddenBlockItem.appendChild(img);
-        hiddenBlockItem.appendChild(button);
-
-        // Append the hidden block item to the container
-        hiddenBlocksContainer.appendChild(hiddenBlockItem);
     });
 }
-
 // Variables to store timeouts
 let showTimeout;
 let hideTimeout;
@@ -1628,13 +1889,46 @@ function toggleGradientController() {
     toggleButton.innerText = 'MORE';
   } else {
     controller.classList.remove('collapsed');
-    controller.style.gap = '10px';
+    controller.style.gap = '3px';
     toggleButton.innerText = 'LESS';
   }
 
   isExpanded = !isExpanded;
 }
 
+function openExcludeModal() {
+  document.getElementById('excludeModal').style.display = 'flex';
+  document.getElementById('excludeModalOverlay').style.display = 'block';
+}
+
+function closeExcludeModal() {
+  document.getElementById('excludeModal').style.display = 'none';
+  document.getElementById('excludeModalOverlay').style.display = 'none';
+}
+
+function openOptionsModal() {
+  document.getElementById('optionsModal').style.display = 'flex';
+  document.getElementById('optionsModalOverlay').style.display = 'block';
+}
+
+function closeOptionsModal() {
+  document.getElementById('optionsModal').style.display = 'none';
+  document.getElementById('optionsModalOverlay').style.display = 'none';
+}
+
+function seperated() {
+  document.getElementById('condensedBtn').classList.remove("selected");
+  document.getElementById('seperatedBtn').classList.add("selected");
+  document.getElementById('hiddenBlocksContainer').style.display = 'flex';
+  document.getElementById('hiddenBlocksCondensedContainer').style.display = 'none';
+}
+
+function condensed() {
+  document.getElementById('condensedBtn').classList.add("selected");
+  document.getElementById('seperatedBtn').classList.remove("selected");
+  document.getElementById('hiddenBlocksContainer').style.display = 'none';
+  document.getElementById('hiddenBlocksCondensedContainer').style.display = 'flex';
+}
 </script>
 
 </body>
