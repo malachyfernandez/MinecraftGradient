@@ -579,11 +579,13 @@ input:hover {
 
 .closeInfoBtn {
     position:absolute;
-    top:10px;
-    right:10px;
+    top:18px;
+    right:18px;
     outline:none;
     background:none;
     border-radius:50%;
+    width:20px;
+    height:20px;
 }
 #modalBlockName {
     width:calc(100% - 30px);
@@ -2051,14 +2053,15 @@ function togglePreset(presetID) {
     if (hiddenBlocks.includes(item)) {
         // Remove from hiddenBlocks if it exists
         hiddenBlocks = hiddenBlocks.filter(block => block !== item);
+        let presetMessages = ["Including creative-only blocks","Including blocks with inventories or UIs"];
+        triggerMessage(presetMessages[presetID], "#334");
     } else {
         // Add to hiddenBlocks if it does not exist
         hiddenBlocks.push(item);
+        let presetMessages = ["Excluding creative-only blocks","Excluding blocks with inventories or UIs"];
+        triggerMessage(presetMessages[presetID], "#334");
     }
     newGradient();
-    
-    let presetMessages = ["Excludes creative-only blocks","Excludes blocks with inventories or UI's"];
-    triggerMessage(presetMessages[presetID], "rgb(100,80,125)");
 }
 
 </script>
