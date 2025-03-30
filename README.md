@@ -14,9 +14,22 @@ A highly customizable, visually interactive Minecraft block gradient generator. 
 
 ## 🚀 Getting Started
 
+### Option 1: Local Use
+
 1. Clone or download the repository.
 2. Open `index.html` in any modern web browser.
 3. Start building your Minecraft gradients!
+
+**OR**
+
+### Option 2: Online Version (GitHub Pages)
+
+1. Simply go to: [malachyfernandez.github.io/minecraftGradient](https://malachyfernandez.github.io/minecraftGradient/index.html)
+2. The gradient generator will load automatically in your browser — no installation needed.
+3. Enjoy experimenting with block gradients immediately.
+
+> **What is a GitHub Page?**
+> GitHub Pages is a free hosting service that allows you to publish static websites straight from a GitHub repository.&#x20;
 
 ## 🛠️ Tech Stack
 
@@ -32,6 +45,7 @@ A highly customizable, visually interactive Minecraft block gradient generator. 
 ## 💡 Color Science
 
 The gradient generation is powered by:
+
 - RGB to LAB color space conversion
 - Delta-E distance for perceptual color similarity
 - Smooth LAB interpolation to generate pleasing gradients
@@ -45,3 +59,4 @@ The gradient generation is powered by:
 ## 📜 License
 
 This project is open-source. Feel free to use, modify, and share under your preferred license.
+
