@@ -1,3 +1,5 @@
+![Minecraft Gradient](cover.jpg)
+
 # Minecraft Gradient Generator 🎨🧱
 
 A highly customizable, visually interactive Minecraft block gradient generator. This web-based tool lets you create beautiful block gradients using real Minecraft textures, complete with exclusion filters, zooming, color interpolation, and randomized variations.
