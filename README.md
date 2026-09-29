@@ -41,7 +41,9 @@ A highly customizable, visually interactive Minecraft block gradient generator. 
 ## 📁 File Structure
 
 - `index.html` — Main file containing all markup, styling, and logic.
-- Textures loaded directly via CDN from GitHub (ZtechNetwork/MCBVanillaResourcePack).
+- `textures/` — Vendored vanilla block textures (converted to PNG from the official `Mojang/bedrock-samples` pack).
+- `tools/update_blocks.py` / `tools/apply_blocklist.py` — pipeline to refresh textures and rebuild the block list after new releases.
+- `blocks/block-index.json` — curation database tracking which textures are approved/rejected for gradients.
 
 ## 💡 Color Science
 
