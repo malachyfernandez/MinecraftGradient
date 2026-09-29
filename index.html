@@ -839,9 +839,8 @@ input:hover {
   animation: fadeIn 0.5s;
   z-index: 12;
   display: none;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap:20px;
 }
 
@@ -867,26 +866,34 @@ input:hover {
 
 .contactLinks {
     display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 .contactLink {
-    padding: 10px 16px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.08);
-    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
-    color: white;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    color: rgb(200, 185, 255);
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.contactLink + .contactLink {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .contactLink:hover {
-    outline: rgba(255, 255, 255, 0.3) solid 2.5px;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: rgb(225, 215, 255);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 .optionsContact {
@@ -894,15 +901,19 @@ input:hover {
     font-weight: normal;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    max-width: 300px;
-    text-align: center;
+    gap: 8px;
+    align-items: stretch;
+    text-align: left;
 }
 
 .optionsContact p {
     margin: 0;
     opacity: 0.9;
+}
+
+.feedbackSection {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 16px;
 }
 .multiselectBtn {
     flex:1;
@@ -1189,10 +1200,10 @@ input:hover {
         </div>
     </div>
 
-    <div class="BtnAndLabelContainer optionsBtnContainer">
+    <div class="BtnAndLabelContainer optionsBtnContainer feedbackSection">
         <label>FEEDBACK</label>
         <div class="optionsContact">
-            <p>Block missing or not updated? Found a bug?<br>Let me know!</p>
+            <p>Block missing or not updated? Found a bug? Let me know!</p>
             <div class="contactLinks">
                 <a class="contactLink" href="mailto:malachyfernandez@gmail.com">EMAIL</a>
                 <a class="contactLink" href="https://github.com/malachyfernandez/MinecraftGradient" target="_blank" rel="noopener">GITHUB</a>
@@ -1218,8 +1229,8 @@ input:hover {
             <div class="contactLinks">
                 <a class="contactLink" href="mailto:malachyfernandez@gmail.com">EMAIL</a>
                 <a class="contactLink" href="https://github.com/malachyfernandez/MinecraftGradient" target="_blank" rel="noopener">GITHUB</a>
+                <a class="contactLink" href="https://malachyf.com" target="_blank" rel="noopener">MALACHYF.COM</a>
             </div>
-            <a class="contactLink" href="https://malachyf.com" target="_blank" rel="noopener">MALACHYF.COM</a>
             <button onclick="closeWelcomeModal()">GOT IT</button>
         </div>
     </div>
