@@ -840,8 +840,69 @@ input:hover {
   z-index: 12;
   display: none;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   gap:20px;
+}
+
+.welcomeModal {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+}
+
+.welcomeContent {
+    font-size: 14px;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    align-items: center;
+}
+
+.welcomeContent p {
+    margin: 0;
+}
+
+.contactLinks {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.contactLink {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: rgba(255, 255, 255, 0.2) solid 1.5px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.contactLink:hover {
+    outline: rgba(255, 255, 255, 0.3) solid 2.5px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.optionsContact {
+    font-size: 13px;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    max-width: 300px;
+    text-align: center;
+}
+
+.optionsContact p {
+    margin: 0;
+    opacity: 0.9;
 }
 .multiselectBtn {
     flex:1;
@@ -1127,8 +1188,43 @@ input:hover {
             </button>
         </div>
     </div>
+
+    <div class="BtnAndLabelContainer optionsBtnContainer">
+        <label>FEEDBACK</label>
+        <div class="optionsContact">
+            <p>Block missing or not updated? Found a bug?<br>Let me know!</p>
+            <div class="contactLinks">
+                <a class="contactLink" href="mailto:malachyfernandez@gmail.com">EMAIL</a>
+                <a class="contactLink" href="https://github.com/malachyfernandez/MinecraftGradient" target="_blank" rel="noopener">GITHUB</a>
+                <a class="contactLink" href="https://malachyf.com" target="_blank" rel="noopener">MALACHYF.COM</a>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="optionsModalOverlay" class="overlay" onclick="closeOptionsModal()"></div>
+
+<div id="welcomeModal" class="optionsModal welcomeModal">
+    <button class="closeBtn closeInfoBtn" onclick="closeWelcomeModal()">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4 L16 16 M16 4 L4 16" stroke="rgb(150, 100, 160)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <div class="BtnAndLabelContainer optionsBtnContainer">
+        <label>WHAT'S NEW</label>
+        <div class="welcomeContent">
+            <p>The block list just got a big update — <b>480+ block textures</b> including the newest copper, pale oak, resin, and tuff blocks.</p>
+            <p>Block missing or not updated? Found a bug?<br>Let me know!</p>
+            <div class="contactLinks">
+                <a class="contactLink" href="mailto:malachyfernandez@gmail.com">EMAIL</a>
+                <a class="contactLink" href="https://github.com/malachyfernandez/MinecraftGradient" target="_blank" rel="noopener">GITHUB</a>
+            </div>
+            <a class="contactLink" href="https://malachyf.com" target="_blank" rel="noopener">MALACHYF.COM</a>
+            <button onclick="closeWelcomeModal()">GOT IT</button>
+        </div>
+    </div>
+</div>
+<div id="welcomeModalOverlay" class="overlay" onclick="closeWelcomeModal()"></div>
 
 <script>
 
@@ -1307,9 +1403,18 @@ let hiddenBlocks = [[]];
 let presets = [[181, 179, 182, 188, 36, 452, 451, 12, 15, 449, 450, 437, 436, 435, 434, 375, 376, 377, 379, 39, 31, 33, 62], [46, 68, 69, 72, 65, 82, 83, 52, 50, 482, 115, 37, 49, 181, 179, 182, 188, 199, 255, 251, 268, 228, 272, 273, 266, 260, 198, 36, 452, 451, 12, 15, 449, 450, 437, 436, 435, 434, 445, 453, 249, 257, 258, 375, 376, 377, 379, 80, 401, 407, 125, 209, 305, 78, 210, 351, 362, 110, 14, 430, 1, 461, 474, 32, 230, 146, 427]];
 
 // Modify the close button SVG icon in HTML accordingly.
-let tipTimeout = setTimeout(function() {
-    triggerPersistentMessage("&#128161; Click on a block to exclude it!", "rgb(100,80,125)");
-}, 5000);
+let tipTimeout;
+function scheduleTip() {
+    clearTimeout(tipTimeout);
+    tipTimeout = setTimeout(function() {
+        if (document.getElementById('welcomeModal').style.display === 'flex') {
+            scheduleTip(); // welcome popup still open - try again in 5s
+            return;
+        }
+        triggerPersistentMessage("&#128161; Click on a block to exclude it!", "rgb(100,80,125)", 'excludeTip');
+    }, 5000);
+}
+scheduleTip();
 
 let hasTriggered = false;
 
@@ -1317,7 +1422,7 @@ new ResizeObserver(entries => {
   if (!hasTriggered && entries[0].target.scrollWidth > entries[0].target.clientWidth && hiddenBlocks[0].length > 1) {
     hasTriggered = true; // Set the flag to true to prevent future triggers
     setTimeout(function() {
-        triggerPersistentMessage("&#128161; Too many excluded blocks? <br> Hide them in options!", "rgb(100,80,125)");
+        triggerPersistentMessage("&#128161; Too many excluded blocks? <br> Hide them in options!", "rgb(100,80,125)", 'tooManyExcluded');
     }, 1000);
   }
 }).observe(document.getElementById("hiddenBlocksContainer"));
@@ -1899,6 +2004,7 @@ let currentBlockData; // To keep track of the block in the modal
 
 function openBlockModal(blockData) {
   clearTimeout(tipTimeout);
+  storeFlag('dismissed_excludeTip'); // they already know clicking blocks works
   currentBlockData = blockData;
   document.getElementById('modalBlockImage').src = './' + blockData[1];
   document.getElementById('modalBlockName').innerText = blockData[0];
@@ -2036,9 +2142,20 @@ function triggerMessage(message, color) {
 }
 
 
-function triggerPersistentMessage(message, color) {
+function storeFlag(key) {
+    try { localStorage.setItem(key, '1'); } catch (e) {}
+}
+function readFlag(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+
+let currentMessageId = null;
+
+function triggerPersistentMessage(message, color, id) {
+    if (id && readFlag('dismissed_' + id)) return; // already x'ed out once
+    currentMessageId = id || null;
     const errorMessage = document.getElementById('persistentMessageContainer');
-    
+
     errorMessage.style.backgroundColor = color;
 
     // Set the new message text
@@ -2048,6 +2165,10 @@ function triggerPersistentMessage(message, color) {
 }
 
 function hidePersistentMessage() {
+    if (currentMessageId) {
+        storeFlag('dismissed_' + currentMessageId);
+        currentMessageId = null;
+    }
     const errorMessage = document.getElementById('persistentMessageContainer');
 
     errorMessage.classList.remove('show');
@@ -2091,6 +2212,23 @@ function openOptionsModal() {
 function closeOptionsModal() {
   document.getElementById('optionsModal').style.display = 'none';
   document.getElementById('optionsModalOverlay').style.display = 'none';
+}
+
+function openWelcomeModal() {
+  document.getElementById('welcomeModal').style.display = 'flex';
+  document.getElementById('welcomeModalOverlay').style.display = 'block';
+}
+
+function closeWelcomeModal() {
+  document.getElementById('welcomeModal').style.display = 'none';
+  document.getElementById('welcomeModalOverlay').style.display = 'none';
+  storeFlag('welcomeSeen'); // never show again
+  scheduleTip(); // restart the exclude-tip timer now that the popup is closed
+}
+
+// First-visit welcome popup - shows once, then never again
+if (!readFlag('welcomeSeen')) {
+  setTimeout(openWelcomeModal, 800);
 }
 
 function seperated() {
