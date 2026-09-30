@@ -273,6 +273,7 @@ input:hover {
 .circleBtn {
     width: 40px;
     border-radius: 50%;
+    margin-left: 6px;
 }
 .BtnAndLabelContainer {
     display: flex;
@@ -1032,12 +1033,19 @@ input:hover {
         
     </button>
     <div class="zoomBtns">
-    <button class="halfBtn" id="zoomIn" onclick="zoomIn()">+</button>
-    <button class="halfBtn" id="zoomOut" onclick="zoomOut()">-</button>
+    <button class="halfBtn" id="zoomIn" onclick="zoomIn()">
+        <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 4 v12 M4 10 h12" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
+    <button class="halfBtn" id="zoomOut" onclick="zoomOut()">
+        <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10 h12" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+    </button>
     <button class="halfBtn circleBtn" id="zoomReset" onclick="zoomReset()">
         <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 3a7 7 0 1 1 -7 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M3 4 L3 10 L8.5 10" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 7 V3 h4 M13 3 h4 v4 M3 13 v4 h4 M17 13 v4 h-4" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>
     </div>
