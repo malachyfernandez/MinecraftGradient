@@ -95,7 +95,6 @@ button:hover {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    transition: height 0.3s ease;
 }
 .rowContainer {
     display: flex; /* Use flexbox to arrange elements */
@@ -270,6 +269,10 @@ input:hover {
 }
 #zoomIn {
     border-radius: 20px 5px 5px 20px;
+}
+.circleBtn {
+    width: 40px;
+    border-radius: 50%;
 }
 .BtnAndLabelContainer {
     display: flex;
@@ -1031,6 +1034,12 @@ input:hover {
     <div class="zoomBtns">
     <button class="halfBtn" id="zoomIn" onclick="zoomIn()">+</button>
     <button class="halfBtn" id="zoomOut" onclick="zoomOut()">-</button>
+    <button class="halfBtn circleBtn" id="zoomReset" onclick="zoomReset()">
+        <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3a7 7 0 1 1 -7 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M3 4 L3 10 L8.5 10" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
     </div>
   </div>
   <div class="gradientControllerRightAligner">
@@ -1728,6 +1737,9 @@ window.addEventListener('resize', function() {
       // Update the previous width to the current width
       previousWidth = currentWidth;
     }
+
+    // viewport/panel size may have changed - refresh the scroll bounds
+    updateScrollHeight();
   }, 10); // 150 milliseconds debounce delay
 });
 
@@ -1809,7 +1821,11 @@ function updateScrollHeight(scale) {
     // isn't clipped by overflow:hidden before the real grid regenerates
     const contentHeight = length * 20;
     if (!Number.isFinite(contentHeight) || contentHeight <= 0) return;
-    document.querySelector('.blockAlignerContainer').style.height = `${contentHeight * scale}px`;
+    // buffer lets you scroll the block bottom just above the floating panel
+    // (incl. its bottom offset + a little breathing room)
+    const panel = document.querySelector('.settingsPanel');
+    const buffer = (panel ? panel.offsetHeight : 0) + 30;
+    document.querySelector('.blockAlignerContainer').style.height = `${contentHeight * scale + buffer}px`;
 }
 
 function zoomIn() {
@@ -1852,6 +1868,16 @@ function zoomOut() {
         // Adjust the body's scroll position to keep the zoomed content in view
         scrollBody(0.8);
     }
+}
+
+function zoomReset() {
+    const element = document.querySelector('.blockScalerContainer');
+    const matrix = new WebKitCSSMatrix(window.getComputedStyle(element).transform);
+    const oldScale = matrix.a || 1;
+    if (oldScale === 1) return;
+    element.style.transform = 'scale(1)';
+    updateScrollHeight(1);
+    scrollBody(1 / oldScale);
 }
 
 
@@ -2208,6 +2234,9 @@ function toggleGradientController() {
   }
 
   isExpanded = !isExpanded;
+  // panel height just changed - re-measure the scroll buffer once the
+  // collapse transition finishes
+  setTimeout(updateScrollHeight, 350);
 }
 
 function openExcludeModal() {
