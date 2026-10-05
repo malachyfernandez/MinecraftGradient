@@ -1220,6 +1220,17 @@ input:hover {
     </div>
 
     <div class="BtnAndLabelContainer optionsBtnContainer feedbackSection">
+        <label>MAX GRADIENT LENGTH</label>
+        <div class="optionsContact">
+            <div class="slider">
+                <input inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" id="maxLengthInput" class="sliderInput" min="50" max="384" value="50">
+                <input type="range" id="maxLengthSlider" min="50" max="384" value="50" step="1">
+            </div>
+            <p>Up to 384 — the full vanilla world height (Y -64 to 319). High values are heavy and can be slow to generate.</p>
+        </div>
+    </div>
+
+    <div class="BtnAndLabelContainer optionsBtnContainer feedbackSection">
         <label>FEEDBACK</label>
         <div class="optionsContact">
             <p>Block missing or not updated? Found a bug? Let me know!</p>
@@ -1496,7 +1507,7 @@ function refreshGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
             openBlockModal(blockData);
         });
     }
-    for (let i = length; i < 50; i++) {
+    for (let i = length; i < maxLength; i++) {
         const block = document.getElementById(`${rowNumber},${i}`);
         block.style.display = `none`;
 
@@ -1520,7 +1531,7 @@ function refreshPreviewGradientLine(rgb1, rgb2, length, randomness, rowNumber) {
 
         // Append the new image to the container
     }
-    for (let i = length; i < 50; i++) {
+    for (let i = length; i < maxLength; i++) {
         const block = document.getElementById(`${rowNumber},${i}PREVIEW`);
         block.style.display = `none`;
 
@@ -1535,7 +1546,7 @@ function createDummyLine(rowNumber) {
     const rowContainer = document.createElement('div');
     rowContainer.classList.add('rowContainer');
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < maxLength; i++) {
         const percentage = i / (length - 1); // Calculate the interpolation percentage
 
         // Interpolate the base color between rgb1 and rgb2
@@ -1562,7 +1573,7 @@ function createDummyPreviewLine(rowNumber) {
     rowContainer.classList.add('rowContainer');
     rowContainer.classList.add('rowContainer-preview');
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < maxLength; i++) {
         const percentage = i / (length - 1); // Calculate the interpolation percentage
 
         // Interpolate the base color between rgb1 and rgb2
@@ -1587,6 +1598,7 @@ function createDummyPreviewLine(rowNumber) {
 var rgb1 = [15,10,24];
 var rgb2 = [130,123,119];
 var length = 14; // Number of gradient steps
+let maxLength = parseInt(readValue('maxGradientLength')) || 50; // cap on gradient steps (default 50, up to 384 = full MC world height)
 var randomness = 0.3; // Randomness factor (0 to 1)
 
 function createDummyBlocks() {
@@ -1760,6 +1772,44 @@ const lengthSlider = document.getElementById('LengthSlider');
 const lengthInput = document.getElementById('LengthInput');
 const randomnessSlider = document.getElementById('randomnessSlider');
 const randomnessInput = document.getElementById('randomnessInput');
+const maxLengthSlider = document.getElementById('maxLengthSlider');
+const maxLengthInput = document.getElementById('maxLengthInput');
+
+// Apply the saved max-length cap to the gradient controls
+lengthSlider.max = maxLength;
+lengthInput.max = maxLength;
+maxLengthSlider.value = maxLength;
+maxLengthInput.value = maxLength;
+
+function applyMaxLength(value) {
+    maxLength = Math.min(384, Math.max(50, parseInt(value) || 50));
+    storeValue('maxGradientLength', maxLength);
+    maxLengthSlider.value = maxLength;
+    maxLengthInput.value = maxLength;
+    lengthSlider.max = maxLength;
+    lengthInput.max = maxLength;
+    if (length > maxLength) {
+        length = maxLength;
+        lengthSlider.value = maxLength;
+        lengthInput.value = maxLength;
+    }
+    newPreviewGradient();
+    newGradient();
+}
+
+// Sync the two max-length inputs while typing/dragging; apply on commit
+maxLengthSlider.addEventListener('input', function() {
+    maxLengthInput.value = this.value;
+});
+maxLengthSlider.addEventListener('change', function() {
+    applyMaxLength(this.value);
+});
+maxLengthInput.addEventListener('input', function() {
+    maxLengthSlider.value = this.value;
+});
+maxLengthInput.addEventListener('change', function() {
+    applyMaxLength(this.value);
+});
 
 // Update length value and synchronize the controls
 lengthSlider.addEventListener('input', function() {
@@ -2194,11 +2244,17 @@ function triggerMessage(message, color) {
 }
 
 
+function storeValue(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) {}
+}
+function readValue(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+}
 function storeFlag(key) {
-    try { localStorage.setItem(key, '1'); } catch (e) {}
+    storeValue(key, '1');
 }
 function readFlag(key) {
-    try { return localStorage.getItem(key); } catch (e) { return null; }
+    return readValue(key);
 }
 
 let currentMessageId = null;
